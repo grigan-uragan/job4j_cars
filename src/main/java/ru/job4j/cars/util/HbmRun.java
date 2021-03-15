@@ -29,6 +29,5 @@ public class HbmRun {
             factory.getCurrentSession().getTransaction().rollback();
             throw e;
         }
-
     }
 }
