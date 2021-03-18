@@ -20,9 +20,10 @@ create table users(
 
 create table ads (
     id serial primary key,
-    description varchar(255),
+    description text,
     car_id int references cars(id),
     photo_id int references photo(id),
     active boolean,
-    user_id int references users(id)
+    user_id int references users(id),
+    created timestamp
 );

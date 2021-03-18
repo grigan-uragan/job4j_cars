@@ -1,6 +1,7 @@
 package ru.job4j.cars.model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -20,6 +21,8 @@ public class Ads {
     @JoinColumn(name = "user_id")
     private User user;
     private boolean active;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
     public static Ads of(String description, Car car, Photo photo, User user, boolean active) {
         Ads ads = new Ads();
@@ -28,6 +31,7 @@ public class Ads {
         ads.photo = photo;
         ads.user = user;
         ads.active = active;
+        ads.created = new Date(System.currentTimeMillis());
         return ads;
     }
 
@@ -79,6 +83,14 @@ public class Ads {
         this.active = active;
     }
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -94,5 +106,17 @@ public class Ads {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Ads{" + "id="
+                + id + ", description='"
+                + description + '\'' + ", car="
+                + car + ", photo="
+                + photo + ", user="
+                + user + ", active="
+                + active + ", created="
+                + created + '}';
     }
 }

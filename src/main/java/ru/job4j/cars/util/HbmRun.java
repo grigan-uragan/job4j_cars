@@ -8,6 +8,9 @@ import ru.job4j.cars.model.Ads;
 import ru.job4j.cars.model.Car;
 import ru.job4j.cars.model.Photo;
 import ru.job4j.cars.model.User;
+import ru.job4j.cars.repo.AdRepository;
+
+import java.util.List;
 
 public class HbmRun {
     private static final Logger LOG = LoggerFactory.getLogger(HbmRun.class);
@@ -17,10 +20,9 @@ public class HbmRun {
         try {
             Session session = factory.openSession();
             session.beginTransaction();
-            User user = User.of("user", "user@mail", "1234");
-            Car car = Car.of("BMW", "M3", "sedan", 100.00);
-            Photo photo = Photo.of("images/photo.png");
-            Ads ads = Ads.of("sale car", car, photo, user, true);
+            User user = User.of("Sam", "Sam@mail", "qwerty");
+            Car car = Car.of("Audi", "A6", "sedan", 710.00);
+            Ads ads = Ads.of("sale cool modern car", car, null, user, true);
             session.save(ads);
             session.getTransaction().commit();
             session.close();
@@ -29,5 +31,13 @@ public class HbmRun {
             factory.getCurrentSession().getTransaction().rollback();
             throw e;
         }
+
+        AdRepository repository = new AdRepository(factory);
+        List<Ads> day = repository.allAdsForDay();
+        List<Ads> photo = repository.allAdsWithPhoto();
+        List<Ads> mark = repository.allAdsForMark("BMW");
+        day.forEach(System.out::println);
+        photo.forEach(System.out::println);
+        mark.forEach(System.out::println);
     }
 }

@@ -1,5 +1,7 @@
 package ru.job4j.cars.model;
 
+import ru.job4j.cars.util.HibernateUtil;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -48,5 +50,12 @@ public class Photo {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Photo{" + "id="
+                + id + ", path='"
+                + path + '\'' + '}';
     }
 }
